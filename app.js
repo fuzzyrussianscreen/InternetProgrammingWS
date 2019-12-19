@@ -1,0 +1,33 @@
+const WebSocket = require('ws');
+//const db = require('./DbConnection');
+const webSocketServer = new WebSocket.Server({port: 3000});
+const express = require("express");
+const app = express();
+
+app.get("api/Materials", function(req, res){
+    var content = fs.readFileSync("users.json", "utf8");
+    var users = JSON.parse(content);
+    res.send(users);
+});
+
+webSocketServer.on('connection', (ws, req) => {
+    console.log("Connected!");
+    ws.on('message', message => {
+        if(message === "isUpgrade"){
+            console.log("isUpdate");
+            webSocketServer.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify("Update"));
+                    console.log("Update");
+                }
+            });
+        }
+    });
+});
+
+//db.query("SELECT * FROM Materials").then(((result) => {
+// result.forEach(row =>{
+
+// });
+// }
+//));

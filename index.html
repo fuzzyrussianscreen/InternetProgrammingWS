@@ -1,0 +1,29 @@
+<html>
+
+<body>
+    <div id="root"></div>
+    <script>
+        // const status = document.getElementById('status');
+        // const messages = document.getElementById('messages');
+        const sub = document.getElementById('submit');
+        // const input = document.getElementById('input');
+        const ws = new WebSocket('ws://localhost:3000');
+        function setStatus(value) {
+            console.log(value)
+        }
+        function printMessage(value) {
+            console.log(value);
+        }
+        function SendMessage(){
+            console.log("I'm is Admin and i send message!");
+            ws.send('isUpgrade');
+        }
+        ws.onopen = () => setStatus('ONLINE');
+        ws.onmessage = response => printMessage(response.data);
+    </script>
+<button type="submit" id="upgade" onClick="SendMessage()">
+Send Message is Upgrade
+</button>
+</body>
+
+</html>
