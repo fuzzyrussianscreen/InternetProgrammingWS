@@ -14,11 +14,17 @@ webSocketServer.on('connection', (ws, req) => {
     console.log("Connected!");
     ws.on('message', message => {
         if(message === "isUpgrade"){
-            console.log("isUpdate");
             webSocketServer.clients.forEach(client => {
                 if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify("Update"));
+                    client.send(JSON.stringify('Update'));
                     console.log("Update");
+                }
+            });
+        } else {
+            webSocketServer.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(message);
+                    console.log(message);
                 }
             });
         }
